@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ownCloud - App Framework
  *
@@ -21,24 +20,9 @@
  *
  */
 
+namespace OCP\AppFramework;
 
-namespace OC\AppFramework\Utility;
-
-use OCP\AppFramework\Utility\ITimeFactory;
-
-
-/**
- * Needed to mock calls to time()
- */
-class TimeFactory implements ITimeFactory {
+use Exception;
 
 
-	/**
-	 * @return int the result of a call to time()
-	 */
-	public function getTime() {
-		return time();
-	}
-
-
-}
+class QueryException extends Exception {}
