@@ -307,6 +307,13 @@ interface IServerContainer {
 	function getWebRoot();
 
 	/**
+	 * Get the server root directory
+	 *
+	 * @return string
+	 */
+	function getServerRoot();
+
+	/**
 	 * @return \OCP\Files\Config\IMountProviderCollection
 	 */
 	function getMountProviderCollection();
