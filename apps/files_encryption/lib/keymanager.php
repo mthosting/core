@@ -85,7 +85,12 @@ class Keymanager {
 
 		\OC_FileProxy::$enabled = $proxyStatus;
 
-		return (is_int($result) && $result > 0) ? true : false;
+		if (is_int($result) && $result > 0) {
+			self::$key_cache[$path] = $key;
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
