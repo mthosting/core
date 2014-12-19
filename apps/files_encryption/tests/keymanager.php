@@ -84,7 +84,7 @@ class Keymanager extends TestCase {
 		parent::tearDownAfterClass();
 	}
 
-	function XtestKeyCacheUpdate() {
+	function testKeyCacheUpdate() {
 		$testUser = 'testKeyCacheUpdate';
 		\OCA\Files_Encryption\Keymanager::setPublicKey('oldKey', $testUser);
 
