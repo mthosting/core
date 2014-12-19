@@ -81,12 +81,13 @@ class Keymanager {
 		\OC_FileProxy::$enabled = false;
 
 		self::keySetPreparation($view, $path);
-		$result = $view->file_put_contents($path . '/' . $name, $key);
+		$pathToKey = \OC\Files\Filesystem::normalizePath($path . '/' . $name);
+		$result = $view->file_put_contents($pathToKey, $key);
 
 		\OC_FileProxy::$enabled = $proxyStatus;
 
 		if (is_int($result) && $result > 0) {
-			self::$key_cache[$path] = $key;
+			self::$key_cache[$pathToKey] = $key;
 			return true;
 		}
 
