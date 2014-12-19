@@ -35,6 +35,8 @@ class Keymanager {
 	private static $encryption_base_dir = '/files_encryption';
 	private static $public_key_dir = '/files_encryption/public_keys';
 
+	private static $key_cache = array(); // cache keys
+
 	/**
 	 * read key from hard disk
 	 *
@@ -42,15 +44,24 @@ class Keymanager {
 	 * @return string|bool either the key or false
 	 */
 	private static function getKey($path, $view) {
-		$proxyStatus = \OC_FileProxy::$enabled;
-		\OC_FileProxy::$enabled = false;
 
 		$key = false;
-		if ($view->file_exists($path)) {
-			$key = $view->file_get_contents($path);
-		}
 
-		\OC_FileProxy::$enabled = $proxyStatus;
+		if (isset(self::$key_cache[$path])) {
+			$key =  self::$key_cache[$path];
+		} else {
+
+			$proxyStatus = \OC_FileProxy::$enabled;
+			\OC_FileProxy::$enabled = false;
+
+			if ($view->file_exists($path)) {
+				$key = $view->file_get_contents($path);
+				self::$key_cache[$path] = $key;
+			}
+
+			\OC_FileProxy::$enabled = $proxyStatus;
+
+		}
 
 		return $key;
 	}
